@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react"
 import api from "../api"
 import Note from "../components/Note";
+import Banner from "../components/Banner";
 import "../styles/Home.css";
+import { Router, Route, Routes} from "react-router-dom";
+import Profile from "./Profile";
 
 function Home() {
     const [notes, setNotes] = useState([]);
@@ -45,6 +48,9 @@ function Home() {
 
 
     return <div>
+
+        <Banner/>
+                
         <h1> Home </h1>
         <div>
             <h2>Notes</h2>

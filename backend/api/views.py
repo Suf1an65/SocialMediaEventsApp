@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import ProfileSerializer
 from rest_framework import generics
 from .serializers import UserSerializer, NoteSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Note
+from .models import Note, Profile
+
 
 class NoteListCreate(generics.ListCreateAPIView):
     serializer_class = NoteSerializer
@@ -27,9 +31,35 @@ class NotDelete(generics.DestroyAPIView):
             user = self.request.user
             return Note.objects.filter(author=user)
         
-        
-     
 
+
+class ProfileMeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        try:
+            return self.request.user.profile
+        except Profile.DoesNotExist:
+            return Response(detail="Profile not found", code=404)
+
+    def get(self, request):
+        profile = self.get_object()
+        serializer = ProfileSerializer(profile, context={'request': request})
+        return Response(serializer.data)
+
+    def patch(self, request):
+        profile = self.get_object()
+        serializer = ProfileSerializer(
+            profile,
+            data=request.data,
+            partial=True,
+            context={'request': request}
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+# views.py
 
 
 # Create your views here.
@@ -37,3 +67,6 @@ class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+
+
+
