@@ -10,7 +10,9 @@ function Banner() {
       <nav className="banner-nav">
         <Link to="/profile">Profile</Link>
         <Link to="/myevents">My Events</Link>
-        <Link to="/search">Search Events</Link>
+        <Link to="/viewevents">Search Events</Link>
+        <Link to="/myChats">My chats</Link>
+        <Link to="/friends">Friends</Link>
       </nav>
     </header>
   );

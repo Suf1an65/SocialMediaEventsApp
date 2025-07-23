@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import ProfileCard from "../components/ProfileCard";
 import EditProfileForm from "../components/EditProfileForm";
+import Banner from "../components/Banner";
 
 // Profile.jsx
 function Profile() {
@@ -11,7 +12,7 @@ function Profile() {
 
     const getProfile = async () => {
         try {
-            const res = await api.get("api/profile/me");
+            const res = await api.get("api/profile/me/");
             console.log('API Response:', res.data); // Verify raw response
             setProfile(res.data);
         } catch (error) {
@@ -33,8 +34,9 @@ function Profile() {
 
     return (
         <div>
+            <Banner/>
             <ProfileCard profile={profile} />
-            <EditProfileForm profile={profile} setProfile={setProfile} />
+            <EditProfileForm profileData={profile} setProfile={setProfile} />
         </div>
     );
 }

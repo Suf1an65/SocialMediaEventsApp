@@ -6,6 +6,10 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MyEvents from "./pages/myEvents";
+import ViewEvents from "./pages/ViewEvents";
+import GroupChatPage from "./pages/GroupchatPage";
+import FriendsPage from "./pages/FriendsPage";
 
 function Logout() {
   localStorage.clear();
@@ -35,6 +39,38 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/myevents"
+          element={
+            <ProtectedRoute>
+              <MyEvents/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewevents"
+          element={
+            <ProtectedRoute>
+              <ViewEvents/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/myChats"
+          element={
+            <ProtectedRoute>
+              <GroupChatPage/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/friends"
+          element={
+            <ProtectedRoute>
+              <FriendsPage/>
             </ProtectedRoute>
           }
         />
