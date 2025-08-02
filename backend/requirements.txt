@@ -11,3 +11,6 @@ python-dotenv
 pillow
 opencage
 python-decouple
+channels
+channels_redis
+daphne
