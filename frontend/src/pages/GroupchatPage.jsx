@@ -1,4 +1,4 @@
-// GroupChatPage.jsx
+// This is already perfect - no changes needed!
 import { useEffect, useState } from "react";
 import api from "../api";
 import GroupChat from "../components/Groupchat";
@@ -7,11 +7,13 @@ function GroupChatPage() {
     const [joinedPosts, setJoinedPosts] = useState([]);
     const [activePostId, setActivePostId] = useState(null);
 
-    // Get all posts user has joined
     const fetchJoinedEvents = async () => {
         try {
             const res = await api.get("/api/joined-events/");
             setJoinedPosts(res.data);
+            if (res.data.length > 0 && !activePostId) {
+                setActivePostId(res.data[0].id);
+            }
         } catch (err) {
             console.error("Error fetching joined events:", err);
         }
@@ -38,7 +40,8 @@ function GroupChatPage() {
                                         backgroundColor: activePostId === post.id ? "#eee" : "white",
                                         border: "1px solid #ccc",
                                         marginBottom: "0.5rem",
-                                        borderRadius: "8px"
+                                        borderRadius: "8px",
+                                        cursor: "pointer"
                                     }}
                                 >
                                     💬 {post.title}
@@ -49,7 +52,7 @@ function GroupChatPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                     {activePostId ? (
-                        <GroupChat postId={activePostId} />
+                        <GroupChat key={activePostId} postId={activePostId} />
                     ) : (
                         <p>Select a group chat to start chatting</p>
                     )}
